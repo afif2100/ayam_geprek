@@ -1,0 +1,40 @@
+model %>%
+  #definisi layer konvolusi
+  layer_conv_2d(filters = 64 , 
+                kernel_size = c(4,4),
+                activation = 'relu',
+                input_shape = c(100,100,3)) %>%
+  layer_conv_2d(filters = 32,
+                kernel_size = c(3,3),
+                activation = 'relu') %>%
+  layer_average_pooling_2d(pool_size = c(4,4)) %>%
+  
+
+  layer_conv_2d(filters = 32,
+                kernel_size = c(3,3),
+                activation = 'relu') %>%
+  layer_conv_2d(filters = 32,
+                kernel_size = c(3,3),
+                activation = 'relu') %>%
+  layer_conv_2d(filters = 64,
+                kernel_size = c(3,3),
+                activation = 'relu') %>%
+  layer_max_pooling_2d(pool_size = c(2,2)) %>%
+  layer_dropout(rate = 0.5) %>%
+  
+  ## flaten layer jadi neural network biasa
+  layer_flatten() %>%
+  layer_dense(units = 256, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  
+  layer_dense(units = 256, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  
+  layer_dense(units = 128, activation = 'tanh') %>%
+  layer_dropout(rate = 0.5) %>%
